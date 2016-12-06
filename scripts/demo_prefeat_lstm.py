@@ -20,15 +20,13 @@ import sys
 import heapq
 
 #File to read questions and answers
-questionsFile="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/train2014/questions.txt"
-answersFile="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/train2014/answers.txt"
-image_File="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/train2014/imageData.csv"
-image_index_File="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/train2014/image_ids.txt"
+questionsFile="../resources/train2014/questions.txt"
+answersFile="../resources/train2014/answers.txt"
+image_index_File="../resources/train2014/image_ids.txt"
 
-questionsFileVal="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/val2014/questions.txt"
-answersFileVal="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/val2014/answers.txt"
-image_FileVal="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/val2014/imageData.csv"
-image_index_FileVal="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/val2014/image_ids.txt"
+questionsFileVal="../resources/val2014/questions.txt"
+answersFileVal="../resources/answers.txt"
+image_index_FileVal="../resources/image_ids.txt"
 
 weightsFile='../models/weights_prefeat_lstm3.hdf5'
 vggFeaturesFile='../resources/cnn-features/vgg_feats.mat'
@@ -267,8 +265,8 @@ for i in range(30):
 
 	#finalmodel= Sequential()
 	#finalmodel.add(merged)
-#finalmodel.add(textmodel)
-#finalmodel.add(model)
+    #finalmodel.add(textmodel)
+    #finalmodel.add(model)
 	#finalmodel.add(core.Dense(4096, activation="relu",trainable=False))
 	#finalmodel.add(Dropout(0.5))
 	#finalmodel.add(core.Dense(len(ans_vocab), activation="softmax",trainable=False))

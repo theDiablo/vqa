@@ -19,17 +19,18 @@ import h5py
 import scipy.io
 
 #File to read questions and answers
-questionsFile="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/train2014/questions.txt"
-answersFile="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/train2014/answers.txt"
-image_File="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/train2014/imageData.csv"
-image_index_File="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/train2014/image_ids.txt"
+questionsFile="../resources/train2014/questions.txt"
+answersFile="../resources/train2014/answers.txt"
+image_index_File="../resources/train2014/image_ids.txt"
 
-questionsFileVal="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/val2014/questions.txt"
-answersFileVal="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/val2014/answers.txt"
-image_FileVal="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/val2014/imageData.csv"
-image_index_FileVal="/scratch/maths/btech/mt1140594/VQA/PythonHelperTools/val2014/image_ids.txt"
+questionsFileVal="../resources/val2014/questions.txt"
+answersFileVal="../resources/answers.txt"
+image_index_FileVal="../resources/image_ids.txt"
 
-gloveFile="glove.6B.300d.txt"
+vggFeaturesFile="../resources/cnn-features/vgg_feats.mat"
+imageIndexMapFile="../resources/cnn-features/img_ids_map.txt"
+
+gloveFile="../resources/glove/glove.6B.300d.txt"
 
 threshQ=4
 threshA=13
@@ -232,11 +233,11 @@ def prepareImageData( nTrainImages, nValImages, image_index_File, image_index_Fi
     img_id_val=(open(image_index_FileVal)).read().split('\n')
     img_id_train=(open(image_index_File)).read().split('\n')
 
-    mat = scipy.io.loadmat('vgg_feats.mat')
+    mat = scipy.io.loadmat(vggFeaturesFile)
     mat = mat['feats']
 
     map = {}
-    with open('img_ids_map.txt', 'r') as document:
+    with open(imageIndexMapFile, 'r') as document:
         for line in document:
             line = line.split(' ')
             if not line:  # empty line?
@@ -356,7 +357,7 @@ finalmodel.summary()
 #sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 finalmodel.compile(loss="categorical_crossentropy", optimizer="adadelta", metrics=["accuracy"])
 
-checkpointer = ModelCheckpoint(filepath="/home/maths/btech/mt1140594/workspace/VisionProject/scripts/weights_prefeat_lstm.hdf5", verbose=1, save_best_only=True)
+checkpointer = ModelCheckpoint(filepath="../models/weights_prefeat_lstm_glove.hdf5", verbose=1, save_best_only=True)
 
 tmp = finalmodel.fit([x_train,Xtrain], y_train, validation_data=([x_val,Xval], y_val), batch_size=batch_size, nb_epoch=nb_epoch, verbose=1, callbacks=[checkpointer])
 #tmp = finalmodel.fit( x_train, y_train, validation_data=( x_val, y_val), batch_size=batch_size, nb_epoch=nb_epoch, verbose=1)
